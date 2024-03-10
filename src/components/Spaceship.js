@@ -1,32 +1,43 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container } from 'react-bootstrap'
 
-const Spaceship = () => {
+function Spaceship() {
+  const [spaceshipData, setSpaceshipData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchSpaceshipData() {
+      try {
+        const response = await axios.get('https://www.swapi.tech/api/starships/9');
+        setSpaceshipData(response.data.result);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching spaceship data:', error);
+        setLoading(false);
+      }
+    }
+
+    fetchSpaceshipData();
+  }, []);
+
   return (
-    <div>
-        <h1>Spaceship</h1>
-        <p>
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-         ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-      <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-
-     <NavLink to={"/"} >Home</NavLink>
+    <Container>
+        <div>
+      <h2>Spaceship Details</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          <p><strong>Name:</strong> {spaceshipData.properties.name}</p>
+          <p><strong>Model:</strong> {spaceshipData.properties.model}</p>
+          <p><strong>Manufacturer:</strong> {spaceshipData.properties.manufacturer}</p>
+          <p><strong>Cost in Credits:</strong> {spaceshipData.properties.cost_in_credits}</p>
+        </div>
+      )}
     </div>
-  )
+    </Container>
+  );
 }
 
-export default Spaceship
+export default Spaceship;

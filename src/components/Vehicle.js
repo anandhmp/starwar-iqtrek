@@ -1,32 +1,42 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container } from 'react-bootstrap'
 
-const Vehicle = () => {
+function Vehicle() {
+  const [vehiclesData, setVehiclesData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchVehiclesData() {
+      try {
+        const response = await axios.get('https://www.swapi.tech/api/vehicles');
+        setVehiclesData(response.data.results);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching vehicles data:', error);
+        setLoading(false);
+      }
+    }
+
+    fetchVehiclesData();
+  }, []);
+
   return (
-    <div>
-        <h1>Vehicle</h1>
-        <p>
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-         ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-      <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-
-     <NavLink to={"/"} >Home</NavLink>
+    <Container>
+    <div>  
+      <h2>Vehicles</h2>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {vehiclesData.map(vehicle => (
+            <li key={vehicle.uid}>{vehicle.name}</li>
+          ))}
+        </ul>
+      )}
     </div>
-  )
+    </Container>
+  );
 }
 
-export default Vehicle
+export default Vehicle;

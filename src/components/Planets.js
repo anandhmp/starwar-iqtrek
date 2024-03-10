@@ -1,33 +1,44 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container } from 'react-bootstrap'
 
-const Planets = () => {
+function Planets() {
+  const [planets, setPlanets] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPlanets() {
+      try {
+        const response = await axios.get('https://www.swapi.tech/api/planets/');
+        setPlanets(response.data.results);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching planets:', error);
+        setLoading(false);
+      }
+    }
+
+    fetchPlanets();
+  }, []);
+
   return (
-    <div>
-        <h1>Planets</h1>
-        <p>
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-         eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-         ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-      <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-          enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat
-          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-          sunt in culpa qui officia deserunt mollit anim id est laborum.
-     </p>
-
-     <NavLink to={"/"} >Home</NavLink>
-
+    <Container>
+        <div>
+      <h1>Planets</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <ul>
+          {planets.map(planet => (
+            <li key={planet.uid}>
+              <strong>{planet.name}</strong>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
-  )
+    </Container>
+  );
 }
 
-export default Planets
+export default Planets;
