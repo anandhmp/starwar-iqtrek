@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
 
 function Planets() {
   const [planets, setPlanets] = useState([]);
@@ -41,7 +41,6 @@ function Planets() {
               <Card key={planet.uid} className='my-4'>
                 <Card.Body>
                   <Card.Title>{planet.name}</Card.Title>
-                  {/* Use Link component to navigate to details page */}
                   <Link to={'/planet/' + planet.uid} className="btn btn-primary">View Details</Link>
                 </Card.Body>
               </Card>

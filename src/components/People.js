@@ -1,5 +1,3 @@
-// People.js
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Card, Button } from 'react-bootstrap';
@@ -43,7 +41,6 @@ function People() {
               <Card key={person.uid} className='my-4'>
                 <Card.Body>
                   <Card.Title>{person.name}</Card.Title>
-                  {/* Use Link to redirect to the PersonDetail page */}
                   <Link to={`/person/${person.uid}`} className="btn btn-primary">Details</Link>
                 </Card.Body>
               </Card>

@@ -24,7 +24,7 @@ function Spaceship() {
     fetchSpaceships();
   }, []);
 
-  // Get current cards
+  
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentSpaceships = spaceships.slice(indexOfFirstCard, indexOfLastCard);

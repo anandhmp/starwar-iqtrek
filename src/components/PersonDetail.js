@@ -40,7 +40,6 @@ function PersonDetail() {
                 Gender: {person.properties.gender}<br />
                 Height: {person.properties.height}
               </Card.Text>
-              {/* Add more details here */}
             </Card.Body>
           </Card>
         )}
