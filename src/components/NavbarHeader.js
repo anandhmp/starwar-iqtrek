@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 function Navbar() {
     return  <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
     <div className="navbar-brand">
-        <h4>Starwar Fanpage</h4>
+        <h4>Starwar's Fanpage</h4>
     </div>
     <button
         className="navbar-toggler"
@@ -38,8 +38,8 @@ function Navbar() {
                 </NavLink>
             </li>
             <li className="nav-item">
-                <NavLink to={"/vehicle"} className="nav-link">
-                    Vehicle
+                <NavLink to={"/vehicles"} className="nav-link">
+                    Vehicles
                 </NavLink>
             </li>
         </ul>
